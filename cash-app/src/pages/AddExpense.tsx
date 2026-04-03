@@ -16,10 +16,10 @@ export default function AddExpense() {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const canSubmit = parseFloat(amount) > 0 && amount !== '0';
 
-    if (!amount || parseFloat(amount) <= 0) {
+  const submitExpense = () => {
+    if (!canSubmit) {
       return;
     }
 
@@ -31,6 +31,11 @@ export default function AddExpense() {
     });
 
     navigate('/');
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitExpense();
   };
 
   const displayAmount = amount === '0' ? '0.00' : amount;
@@ -100,7 +105,12 @@ export default function AddExpense() {
           <p className="text-text-secondary text-sm uppercase tracking-wider font-semibold">
             Ingresa el monto
           </p>
-          <NumericKeypad value={amount} onChange={setAmount} />
+          <NumericKeypad
+            value={amount}
+            onChange={setAmount}
+            onConfirm={submitExpense}
+            canConfirm={canSubmit}
+          />
         </motion.div>
 
         {/* Category Selector */}
@@ -168,20 +178,20 @@ export default function AddExpense() {
         {/* Submit Button */}
         <motion.button
           type="submit"
-          disabled={parseFloat(amount) <= 0 || amount === '0'}
+          disabled={!canSubmit}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="w-full py-5 rounded-2xl font-bold text-background text-lg relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
-            background: parseFloat(amount) > 0 && amount !== '0'
+            background: canSubmit
               ? 'linear-gradient(90deg, #00D4AA, #00B894)'
               : 'linear-gradient(90deg, #4A4A5A, #3A3A4A)',
-            boxShadow: parseFloat(amount) > 0 && amount !== '0'
+            boxShadow: canSubmit
               ? '0 0 40px rgba(0, 212, 170, 0.4)'
               : 'none',
           }}
         >
-          {parseFloat(amount) > 0 && amount !== '0' ? 'Guardar Gasto' : 'Ingresa un monto'}
+          {canSubmit ? 'Guardar Gasto' : 'Ingresa un monto'}
         </motion.button>
       </form>
     </motion.div>

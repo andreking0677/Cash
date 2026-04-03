@@ -211,6 +211,21 @@ Total plano                 →         Total con shine effect animado
 
 ---
 
+## Resumen de Hoy (2026-04-03)
+
+### Cambios Aplicados
+- Se corrigió el flujo de ingreso de monto en la interfaz de registrar gasto para evitar guardado accidental al presionar una tecla.
+- Se actualizó el teclado numérico para que cada tecla use acción de edición (`type="button"`) y no dispare envío automático del formulario.
+- Se agregó un botón explícito de confirmación: **Confirmar cantidad**.
+- Se unificó la lógica de validación y guardado para que el gasto solo se registre cuando el monto sea válido y el usuario confirme.
+
+### Resultado
+- Ahora se pueden escribir montos de 2 o más dígitos sin que el gasto se registre de inmediato.
+- El registro ocurre únicamente al confirmar, mejorando control y experiencia de uso.
+
+---
+
 ## Notas de Sesión
 - **2026-04-01:** Sesión 1 - Inicio del proyecto. Definición de arquitectura y tecnologías
 - **2026-04-03:** Sesión 2 - Mejora completa de interfaz. Transformación de simple → innovadora. 5 componentes nuevos, 4 mejorados
+- **2026-04-03:** Sesión 3 - Corrección UX en registro de gastos: se eliminó el auto-guardado al pulsar teclas y se añadió confirmación explícita para registrar montos multi-dígito.
